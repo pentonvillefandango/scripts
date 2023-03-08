@@ -1,3 +1,5 @@
-# scripts
+# my scripts
 
-# helpful scripts from really cool shell scripts
+ticp - transfer file to icp quickly
+
+# really cool shell scripts
