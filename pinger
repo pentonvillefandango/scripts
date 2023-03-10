@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]
+then
+    echo "Usage: $0 <network address> <subnet mask>"
+    exit 1
+fi
+
+network=$1
+subnet_mask=$2
+
+IFS=. read -r a b c d <<< "$network"
+IFS=. read -r m1 m2 m3 m4 <<< "$subnet_mask"
+
+# Compute network address and broadcast address
+network_addr="$((a & m1)).$((b & m2)).$((c & m3)).$((d & m4))"
+broadcast_addr="$(((a & m1) | (255 - m1))).$(((b & m2) | (255 - m2))).$(((c & m3) | (255 - m3))).$(((d & m4) | (255 - m4)))"
+
+# Iterate through all IP addresses in range
+for ((i=$(($d & $m4)); i<$(($d | (255 - $m4) + 1)); i++))
+do
+    ip="$((a & m1)).$((b & m2)).$((c & m3)).$i"
+    # ping -c 1 $ip > /dev/null  switch this line with the one below to get linux verson
+    ping -t 1 $ip > /dev/null
+    if [ $? -eq 0 ]
+    then
+        echo "$ip is up"
+    else
+        echo "$ip is down"
+    fi
+done
