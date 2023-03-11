@@ -6,15 +6,15 @@ function validAlphaNum()
 {
     # Validate arg: returns 0 if all upper + lower + digits, otherwise 1
 
-    # remove all unacceptable characters alphanumeric only
+    # remove all unacceptable characters leave alphanumeric only
     validchars="$(echo $1 | sed -e 's/[^[:alnum:]]//g')"
-    # remove all unacceptable characters - Requre upper case with spaces and ,.
+    # remove all unacceptable characters - Leave upper case with spaces and ,.
     # validchars="$(echo $1 | sed -e 's/[^[:upper:] ,.]//g')"
 
-    # remove all unacceptable characters - Require digits with ()-
+    # remove all unacceptable characters - Leave digits and  ()-
     # validchars="$(echo $1 | sed -e 's/[^-[:digit:]\(\)]//g')"
     
-    # remove all unacceptable characters - Require Integers only
+    # remove all unacceptable characters - Leave postive Integers only
     # validchars="$(echo $1 | sed -e 's/[^[:digit:]]//g')"
 
     if [ "$validchars" = "$1" ]
